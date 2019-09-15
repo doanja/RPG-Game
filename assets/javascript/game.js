@@ -1,6 +1,14 @@
 // globals
-let kenobi, luke, sidious, maul;
+const characters = []; // used to store Character objects
+let kenobi, luke, sidious, maul; // characters
 
+/*
+ * @param name, the name of the character
+ * @param hp, the health points of the character
+ * @param ap, the attack points of the character
+ * @param cap, the counter attack points of the character
+ * Constructor for a character
+ */
 function Character(name, hp, ap, cap) {
   this.name = name;
   this.hp = hp;
@@ -8,14 +16,11 @@ function Character(name, hp, ap, cap) {
   this.cap = cap;
 }
 
-const initialize = () => {
-  // foor loop - go through each player jquery, go to array, set each of the elements from the array
-  kenobi = new Character('kenobi', 120, 5, 7);
-  luke = new Character('luke', 100, 3, 8);
-  sidious = new Character('sidious', 150, 10, 3);
-  maul = new Character('maul', 180, 19, 2);
-};
-
+/*
+ * @param the parentElement, the element to append elements to
+ * @param characterm the character used to identify and initilize the elements
+ * function to render elements and append them to the parentElement
+ */
 const renderPlayerCards = (parentElement, character) => {
   const col = $('<div>', { class: 'col-sm-12 col-md-3 ' + character.name });
   const card = $('<div>', { class: 'card player' + character.name });
@@ -33,7 +38,7 @@ const renderPlayerCards = (parentElement, character) => {
   );
   const button = $('<button>', {
     class: 'btn btn-primary w-100 ' + character.name,
-    id: 'special'
+    id: character.name
   }).text('Select');
 
   parentElement.append(col);
@@ -45,10 +50,34 @@ const renderPlayerCards = (parentElement, character) => {
   cardBody.append(button);
 };
 
+const initClickListeners = (id) => {
+  $('#' + id.name).click(function() {
+    console.log('button ' + id.name);
+  });
+};
+
+/*
+ * initializes four Characters and adds them to a characters array.
+ * renders the elements and adds click listeners to each card
+ */
+const initialize = () => {
+  // foor loop - go through each player jquery, go to array, set each of the elements from the array
+  kenobi = new Character('kenobi', 120, 5, 7);
+  luke = new Character('luke', 100, 3, 8);
+  sidious = new Character('sidious', 150, 10, 3);
+  maul = new Character('maul', 180, 19, 2);
+
+  characters.push(kenobi, luke, sidious, maul);
+  characters.forEach((character) => {
+    renderPlayerCards($('#player_row'), character);
+    initClickListeners(character);
+  });
+};
+
 window.onload = () => {
   initialize();
 
-  renderPlayerCards($('#player_row'), kenobi);
+  // renderPlayerCards($('#player_row'), kenobi);
   // renderPlayerCards($('#player_row'), luke);
   // renderPlayerCards($('#player_row'), sidious);
   // renderPlayerCards($('#player_row'), maul);
@@ -65,10 +94,7 @@ window.onload = () => {
   //   $('.player').hide();
   // });
 
-  // console.log($('.kenobi')[4]);
-  console.log(
-    $('#special').click(function() {
-      console.log('he');
-    })
-  );
+  // console.log('kenobi', $('.kenobi')[4]);
+
+  // console.log('special', $('#special'));
 };
