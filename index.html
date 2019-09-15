@@ -24,53 +24,51 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-12 col-md-3">
-                        <div class="card" id="player_card_1">
+                        <div class="card player" id="player_card_1">
                             <div class="card-body">
                                 <h5 class="card-title text-center" id="player_name_1">Hero A</h5>
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="player_image_1">
                                 <p class="card-text" id="player_hp_1">100 HP</p>
-                                <button id="select-character" class="btn btn-primary w-100">Select</button>
+                                <button id="select_player_1" class="btn btn-primary w-100">Select</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <div class="card" id="player_card_2">
+                        <div class="card player" id="player_card_2">
                             <div class="card-body">
                                 <h5 class="card-title text-center" id="player_name_2">Hero B</h5>
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="player_image_2">
                                 <p class="card-text" id="player_hp_2">110 HP</p>
-                                <button id="select-character" class="btn btn-primary w-100">Select</button>
+                                <button id="select_player_2" class="btn btn-primary w-100">Select</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <div class="card" id="player_card_3">
+                        <div class="card player" id="player_card_3">
                             <div class="card-body">
                                 <h5 class="card-title text-center" id="player_name_3">Hero C</h5>
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="player_image_3">
                                 <p class="card-text" id="player_hp_3">130 HP</p>
-                                <button id="select-character" class="btn btn-primary w-100">Select</button>
+                                <button id="select_player_3" class="btn btn-primary w-100">Select</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <div class="card" id="player_card_4">
+                        <div class="card player" id="player_card_4">
                             <div class="card-body">
                                 <h5 class="card-title text-center" id="player_name_4">Hero D</h5>
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="player_image_4">
                                 <p class="card-text" id="player_hp_4">200 HP</p>
-                                <button id="select-character" class="btn btn-primary w-100">Select</button>
+                                <button id="select_player_4" class="btn btn-primary w-100">Select</button>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
 
         <br>
@@ -88,7 +86,7 @@
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="enemy_image_1">
                                 <p class="card-text" id="enemy_hp_1">100 HP</p>
-                                <button id="select-character" class="btn btn-danger w-100">Select</button>
+                                <button id="select_enemy_1" class="btn btn-danger w-100">Select</button>
                             </div>
                         </div>
                     </div>
@@ -99,7 +97,7 @@
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="enemy_image_2">
                                 <p class="card-text" id="enemy_hp_2">110 HP</p>
-                                <button id="select-character" class="btn btn-danger w-100">Select</button>
+                                <button id="select_enemy_2" class="btn btn-danger w-100">Select</button>
                             </div>
                         </div>
                     </div>
@@ -110,7 +108,7 @@
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="enemy_image_3">
                                 <p class="card-text" id="enemy_hp_3">120 HP</p>
-                                <button id="select-character" class="btn btn-danger w-100">Select</button>
+                                <button id="select_enemy_3" class="btn btn-danger w-100">Select</button>
                             </div>
                         </div>
                     </div>
@@ -121,7 +119,7 @@
                                 <img class="mx-auto" src="https://picsum.photos/200" alt="sample image"
                                     id="enemy_image_4">
                                 <p class="card-text" id="enemy_hp_3">130 HP</p>
-                                <button id="select-character" class="btn btn-danger w-100">Select</button>
+                                <button id="select_enemy_4" class="btn btn-danger w-100">Select</button>
                             </div>
                         </div>
                     </div>
@@ -148,20 +146,27 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-3">
-                        <div class="card" id="defender_card_1">
+                        <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title text-center">Fight Options</h5>
                                 <button class="btn btn-warning w-100" id="action_button">Fight</button>
                             </div>
                         </div>
                     </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="text-left" id="fight_text">hello</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         </div>
 
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
