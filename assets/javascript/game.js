@@ -13,26 +13,32 @@ const initPlayer = (name, hp, ap, cap) => {
   return character;
 };
 
-const initialize = () => {
-  // foor loop - go through each player jquery, go to array, set each of the elements from the array
-  kenobi = new Character(kenobi, 120, 5, 7);
-  luke = new Character(luke, 100, 3, 8);
-  sidious = new Character(sidious, 150, 10, 3);
-  maul = new Character(maul, 180, 19, 2);
+// const initialize = () => {
+//   // foor loop - go through each player jquery, go to array, set each of the elements from the array
+//   kenobi = new Character(kenobi, 120, 5, 7);
+//   luke = new Character(luke, 100, 3, 8);
+//   sidious = new Character(sidious, 150, 10, 3);
+//   maul = new Character(maul, 180, 19, 2);
+// };
+
+const renderPlayerCards = (parent, i) => {
+  const col = $('<div>', { class: 'col-sm-12 col-md-3' });
+  const card = $('<div>', { class: 'card' });
+  const cardBody = $('<div>', { class: 'card-body' });
+  const cardTitle = $('<h5>', { class: 'card-title text-center' });
 };
 
 window.onload = () => {
-  $('#select_player_1').on('click', function() {
-    character = initPlayer('fred', 100, 10, 5);
-    $('.player').hide();
-    $('#player_card_1').show();
-    $('#player_name_1').text(character.name);
-    $('#player_hp_1').text(character.hp + ' HP');
-  });
-
-  $('#select_player_2').on('click', function() {
-    character = initPlayer('bob', 200, 5, 7);
-    $('.player').hide();
-    $('#player_card_2').show();
-  });
+  // $('#select_player_1').on('click', function() {
+  //   character = initPlayer('fred', 100, 10, 5);
+  //   $('.player').hide();
+  //   $('#player_card_1').show();
+  //   $('#player_name_1').text(character.name);
+  //   $('#player_hp_1').text(character.hp + ' HP');
+  // });
+  // $('#select_player_2').on('click', function() {
+  //   character = initPlayer('bob', 200, 5, 7);
+  //   $('.player').hide();
+  //   $('#player_card_2').show();
+  // });
 };
