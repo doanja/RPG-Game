@@ -1,9 +1,9 @@
-// globals
-const characters = []; // used to store Character objects
-let kenobi, luke, sidious, maul; // characters
-let selectedCharacter, selectedDefender;
-let canSelectEnemy; // change this to false when you click on an enemy,
-let enemiesRemaining;
+// globals variables
+const characters = []; // array of characters
+let kenobi, luke, sidious, maul; // character objects
+let selectedCharacter, selectedDefender; // copies of the selected character and enemy
+let canSelectEnemy; // used to determine if the player is already fighting an enemy
+let enemiesRemaining; // counter for the number of enemies
 
 /*
  * @param name, the name of the character
@@ -225,12 +225,13 @@ const updateDefenderCard = () => {
 };
 
 /*
- *
+ * @param text, the text to be alerted
+ * function to clear all game cards and re-initialize the game
  */
 const resetGame = text => {
   alert(text);
 
-  //
+  // clear all game cards
   $('#player_row').empty();
   $('#enemy_row').empty();
   $('#defender_row').empty();
