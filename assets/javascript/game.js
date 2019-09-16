@@ -1,6 +1,6 @@
 // globals variables
 const characters = []; // array of characters
-let kenobi, luke, sidious, maul; // character objects
+let kenobi, luke, yoda, maul; // character objects
 let selectedCharacter, selectedDefender; // copies of the selected character and enemy
 let canSelectEnemy; // used to determine if the player is already fighting an enemy
 let enemiesRemaining; // counter for the number of enemies
@@ -12,12 +12,13 @@ let enemiesRemaining; // counter for the number of enemies
  * @param cap, the counter attack points of the character
  * Constructor for a character
  */
-function Character(name, hp, ap, cap, baseAp) {
+function Character(name, hp, ap, cap, baseAp, imageSrc) {
   this.name = name;
   this.hp = hp;
   this.ap = ap;
   this.cap = cap;
   this.baseAp = baseAp;
+  this.imageSrc = imageSrc;
 }
 
 /*
@@ -37,7 +38,7 @@ const renderCards = (parentElement, character, str, buttonColor) => {
   }).text(character.name);
   const img = $('<img>', {
     class: 'mx-auto',
-    src: 'https://picsum.photos/200',
+    src: character.imageSrc,
     alt: 'sample image'
   });
   const p = $('<p>', { class: 'card-text ' + str + '-health' }).text(
@@ -114,7 +115,7 @@ const renderDefenderCard = (parentElement, character) => {
   }).text(character.name);
   const img = $('<img>', {
     class: 'mx-auto defender-image',
-    src: 'https://picsum.photos/200',
+    src: character.imageSrc,
     alt: 'sample image'
   });
   const p = $('<p>', {
@@ -243,13 +244,13 @@ const resetGame = text => {
  */
 const initializeCharacters = () => {
   // initialize four characters
-  kenobi = new Character('Kenobi', 120, 5, 7, 5);
-  luke = new Character('Luke', 100, 3, 8, 3);
-  sidious = new Character('Sidious', 150, 10, 3, 10);
-  maul = new Character('Maul', 180, 19, 2, 19);
+  kenobi = new Character('Kenobi', 120, 5, 7, 5, './assets/images/kenobi.png');
+  luke = new Character('Luke', 100, 3, 8, 3, './assets/images/luke.jpeg');
+  yoda = new Character('Yoda', 150, 10, 3, 10, './assets/images/yoda.jpg');
+  maul = new Character('Maul', 180, 19, 2, 19, './assets/images/maul.jpg');
 
   // add the four characters to the array
-  characters.push(kenobi, luke, sidious, maul);
+  characters.push(kenobi, luke, yoda, maul);
 };
 
 /*

@@ -1,7 +1,8 @@
-/* .container {
-  border: 1px solid red;
+body {
+  background: url('../images/ep_naturalblack.png');
 }
 
-.col-sm-12 {
-  border: 1px solid blue;
-} */
+img {
+  width: 200px;
+  height: 200px;
+}
