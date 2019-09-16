@@ -4,6 +4,10 @@ let kenobi, luke, yoda, maul; // character objects
 let selectedCharacter, selectedDefender; // copies of the selected character and enemy
 let canSelectEnemy; // used to determine if the player is already fighting an enemy
 let enemiesRemaining; // counter for the number of enemies
+let characterSelectSounds,
+  fightSounds,
+  loseSounds,
+  winSounds = [];
 
 /*
  * @param name, the name of the character
@@ -48,6 +52,13 @@ const renderCards = (parentElement, character, str, buttonColor) => {
     class: 'btn btn-' + buttonColor + ' w-100',
     id: character.name + '-button-' + str
   }).text('Select');
+  const audio = $('<audio>', {
+    id: str + '-' + character.name + '-sound',
+    src:
+      characterSelectSounds[
+        Math.floor(Math.random() * characterSelectSounds.length)
+      ]
+  });
 
   parentElement.append(col);
   col.append(card);
@@ -56,6 +67,7 @@ const renderCards = (parentElement, character, str, buttonColor) => {
   cardBody.append(img);
   cardBody.append(p);
   cardBody.append(button);
+  cardBody.append(audio);
 };
 
 /*
@@ -68,6 +80,9 @@ const onPlayerSelect = character => {
   $('#' + character.name + '-button-player').click(function() {
     $('.player').hide(); // hide all other player cards
     $('.' + character.name + '-player').show(); // display the player card
+    $('#' + character.name + '-button-player').hide();
+
+    playSound('player-' + character.name + '-sound');
 
     // create a copy of the selected character
     selectedCharacter = { ...character };
@@ -82,6 +97,8 @@ const onEnemySelect = character => {
     }
     // if an enemy hasnt been selected...
     else {
+      playSound('enemy-' + character.name + '-sound');
+
       canSelectEnemy = false; // disallow player from selecting a new enemy
       enemiesRemaining--; // decrement the number of enemies
       $('.' + character.name + '-enemy').hide(); // delete the selected enemy card
@@ -145,12 +162,17 @@ const renderFightOptions = parentElement => {
     class: 'btn btn-warning w-100',
     id: 'fight-button'
   }).text('Fight');
+  const audio = $('<audio>', {
+    id: 'fight-sound',
+    src: fightSounds[Math.floor(Math.random() * fightSounds.length)]
+  });
 
   parentElement.append(col);
   col.append(card);
   card.append(cardBody);
   cardBody.append(cardTitle);
   cardBody.append(button);
+  cardBody.append(audio);
 };
 
 /*
@@ -179,21 +201,28 @@ const renderGameStatus = (parentElement, defender) => {
  */
 const fightButtonListener = () => {
   $('#fight-button').click(function() {
-    updateDefenderCard(); // update defender card
+    if (selectedCharacter === null) {
+      alert('Select your character.');
+    } else {
+      updateDefenderCard(); // update defender card
+      playSound('fight-sound');
 
-    // when player hp reaches 0
-    if (selectedCharacter.hp <= 0) {
-      resetGame('YOU LOSE');
-    }
-    // when there are no more enemies and current defender hp raches 0
-    else if (enemiesRemaining === 0 && selectedDefender.hp <= 0) {
-      resetGame('YOU WIN');
-    }
-    // when defender's hp reaches 0
-    else if (selectedDefender.hp <= 0) {
-      alert('Defender died...');
-      $('.card-defender').remove();
-      canSelectEnemy = true;
+      // when player hp reaches 0
+      if (selectedCharacter.hp <= 0) {
+        playSound('lose-sound');
+        resetGame('YOU LOSE');
+      }
+      // when there are no more enemies and current defender hp raches 0
+      else if (enemiesRemaining === 0 && selectedDefender.hp <= 0) {
+        playSound('win-sound');
+        resetGame('YOU WIN');
+      }
+      // when defender's hp reaches 0
+      else if (selectedDefender.hp <= 0) {
+        alert('Defender died...');
+        $('.card-defender').remove();
+        canSelectEnemy = true;
+      }
     }
   });
 };
@@ -226,6 +255,15 @@ const updateDefenderCard = () => {
 };
 
 /*
+ * @param elementID, the ID of the audio element
+ * function to play audio sample
+ */
+const playSound = elementID => {
+  const audio = document.getElementById(elementID);
+  audio.play();
+};
+
+/*
  * @param text, the text to be alerted
  * function to clear all game cards and re-initialize the game
  */
@@ -254,6 +292,30 @@ const initializeCharacters = () => {
 };
 
 /*
+ * function to initialize sound variables
+ */
+const initializeSounds = () => {
+  loseSounds = ['./assets/sounds/lose-sounds/bye-felicia.mp3'];
+  winSounds = ['./assets/sounds/win-sounds/oh-shit_4.mp3'];
+
+  characterSelectSounds = [
+    './assets/sounds/character-select/evillaugh.swf.mp3',
+    './assets/sounds/character-select/glee11.mp3',
+    './assets/sounds/character-select/i-know-kung-fu.mp3',
+    './assets/sounds/character-select/my-name-is-pewdiepie.mp3',
+    './assets/sounds/character-select/ringtone_20.mp3',
+    './assets/sounds/character-select/utini.mp3',
+    './assets/sounds/character-select/wet-fart_1.mp3'
+  ];
+
+  fightSounds = [
+    './assets/sounds/fight-sounds/death-mark.mp3',
+    './assets/sounds/fight-sounds/iihhrrl.mp3',
+    './assets/sounds/fight-sounds/kaiba-pain1.mp3'
+  ];
+};
+
+/*
  *  initialize global variables, and render game cards
  */
 const initializeGame = () => {
@@ -275,5 +337,6 @@ const initializeGame = () => {
 
 window.onload = () => {
   initializeCharacters();
+  initializeSounds();
   initializeGame();
 };
