@@ -65,40 +65,44 @@ const renderCards = (parentElement, character, str, buttonColor) => {
  */
 const onPlayerSelect = character => {
   $('#' + character.name + '-button-player').click(function() {
-    $('.player').hide();
-    $('.' + character.name + '-player').show();
+    $('.player').hide(); // hide all other player cards
+    $('.' + character.name + '-player').show(); // display the player card
 
+    // create a copy of the selected character
     selectedCharacter = { ...character };
-    // // console.log('selectedCharacter :', selectedCharacter);
-    // updateCurrentPlayer(character); // update global selectedCharacter
   });
 };
 
 const onEnemySelect = character => {
   $('#' + character.name + '-button-enemy').click(function() {
+    // check to see if an enemy has already been selected
     if (!canSelectEnemy) {
       alert('An enemy has already been selected.');
-    } else {
-      canSelectEnemy = false;
-      enemiesRemaining--;
-      $('.' + character.name + '-enemy').hide();
+    }
+    // if an enemy hasnt been selected...
+    else {
+      canSelectEnemy = false; // disallow player from selecting a new enemy
+      enemiesRemaining--; // decrement the number of enemies
+      $('.' + character.name + '-enemy').hide(); // delete the selected enemy card
 
+      // create a copy of the selected enemy
       selectedDefender = { ...character };
-      // console.log('selectedDefender :', selectedDefender);
-      // updateCurrentDefender(character);
 
       // render defender info
-      renderDefenderCard($('#defender_row'), selectedDefender); // update this with selectedDefender
+      renderDefenderCard($('#defender_row'), selectedDefender);
       renderFightOptions($('#defender_row'));
       renderGameStatus($('#defender_row'), selectedDefender);
 
-      // console.log('enemy selected...');
-
-      fightButtonListener();
+      fightButtonListener(); // listen to when the player clicks the fight button
     }
   });
 };
 
+/*
+ * @param the parentElement, the element to append elements to
+ * @param defender, the defender used to identify and initilize the defender elements
+ * function to render the defender in the defender card
+ */
 const renderDefenderCard = (parentElement, character) => {
   const col = $('<div>', { class: 'col-sm-12 col-md-3' });
   const card = $('<div>', {
@@ -125,6 +129,10 @@ const renderDefenderCard = (parentElement, character) => {
   cardBody.append(p);
 };
 
+/*
+ * @param the parentElement, the element to append elements to
+ * function to render the fight button in the defender card
+ */
 const renderFightOptions = parentElement => {
   const col = $('<div>', { class: 'col-sm-12 col-md-3' });
   const card = $('<div>', { class: 'card-defender' });
@@ -144,6 +152,11 @@ const renderFightOptions = parentElement => {
   cardBody.append(button);
 };
 
+/*
+ * @param the parentElement, the element to append elements to
+ * @param defender, the defender used to identify and initilize the defender elements
+ * function to render the game status in the defender card
+ */
 const renderGameStatus = (parentElement, defender) => {
   const col = $('<div>', { class: 'col-sm-12 col-md-6' });
   const card = $('<div>', { class: 'card-defender' });
@@ -158,49 +171,26 @@ const renderGameStatus = (parentElement, defender) => {
   cardBody.append(p);
 };
 
+/*
+ * function that handles what happens when you click the fight button,
+ * this function updates the defender card, updates the battle status,
+ * and checks for win/lose conditions.
+ */
 const fightButtonListener = () => {
-  // console.log('fightButtonListener called...');
-  // parameter for msg?
-  console.log('enemiesRemaining :', enemiesRemaining);
   $('#fight-button').click(function() {
-    // console.log('fight button clicked');
+    updateDefenderCard(); // update defender card
 
-    /* update defender info */
-
-    // update player hp, ap
-    selectedCharacter.hp -= selectedDefender.cap; // decrease player's hp base on defender's counter attack power
-    selectedDefender.hp -= selectedCharacter.ap; // decrease defender's hp base on player's attack power
-    selectedCharacter.ap += selectedCharacter.baseAp; // increasse player's base attack power
-
-    // console.log('PLAYER HP :', selectedCharacter.hp);
-    // console.log('ENEMY HP :', selectedDefender.hp);
-    // console.log('PLAYER ATTACK :', selectedCharacter.ap);
-    // console.log('----------------------------------------------------');
-
-    $('.player-health').text(selectedCharacter.hp + ' HP');
-    $('.defender-hp').text(selectedDefender.hp + ' HP');
-
-    // re-render player and defener hp
-    $('#game-status').text(
-      'You attacked ' +
-        selectedDefender.name +
-        ' for ' +
-        selectedCharacter.ap +
-        ' damage. ' +
-        selectedDefender.name +
-        ' attacked you back for ' +
-        selectedDefender.cap +
-        ' damage.'
-    );
-    /* check battle status */
+    // when player hp reaches 0
     if (selectedCharacter.hp <= 0) {
-      alert('gameover');
-      location.reload();
-    } else if (enemiesRemaining === 0 && selectedDefender.hp <= 0) {
-      alert('u win');
-      location.reload();
-    } else if (selectedDefender.hp <= 0) {
-      alert('defender hp under 0');
+      resetGame('YOU LOSE');
+    }
+    // when there are no more enemies and current defender hp raches 0
+    else if (enemiesRemaining === 0 && selectedDefender.hp <= 0) {
+      resetGame('YOU WIN');
+    }
+    // when defender's hp reaches 0
+    else if (selectedDefender.hp <= 0) {
+      alert('Defender died...');
       $('.card-defender').remove();
       canSelectEnemy = true;
     }
@@ -208,8 +198,42 @@ const fightButtonListener = () => {
 };
 
 /*
- * initializes four Characters and adds them to a characters array.
- * renders the elements and adds click listeners to each card
+ * this function updates the player's and defender's
+ * information during the battle.
+ */
+const updateDefenderCard = () => {
+  // update player hp, ap
+  selectedCharacter.hp -= selectedDefender.cap; // decrease player's hp base on defender's counter attack power
+  selectedDefender.hp -= selectedCharacter.ap; // decrease defender's hp base on player's attack power
+  selectedCharacter.ap += selectedCharacter.baseAp; // increasse player's base attack power
+
+  $('.player-health').text(selectedCharacter.hp + ' HP'); // update player's hp
+  $('.defender-hp').text(selectedDefender.hp + ' HP'); // update defender's hp
+
+  // update game-status
+  $('#game-status').text(
+    'You attacked ' +
+      selectedDefender.name +
+      ' for ' +
+      selectedCharacter.ap +
+      ' damage. ' +
+      selectedDefender.name +
+      ' attacked you back for ' +
+      selectedDefender.cap +
+      ' damage.'
+  );
+};
+
+/*
+ *
+ */
+const resetGame = text => {
+  alert(text);
+  location.reload();
+};
+
+/*
+ * initialize global variables and add the four characters to the array
  */
 const initializeVariables = () => {
   canSelectEnemy = true;
@@ -225,6 +249,9 @@ const initializeVariables = () => {
   characters.push(kenobi, luke, sidious, maul);
 };
 
+/*
+ *  renders the player and enemy cards
+ */
 const initializePage = () => {
   // loop through the array and render characters and add click listeners
   characters.forEach(character => {
@@ -235,7 +262,6 @@ const initializePage = () => {
     renderCards($('#enemy_row'), character, 'enemy', 'danger');
     onEnemySelect(character);
   });
-  console.log('enemiesRemaining :', enemiesRemaining);
 };
 
 window.onload = () => {
