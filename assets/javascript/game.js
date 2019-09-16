@@ -229,16 +229,18 @@ const updateDefenderCard = () => {
  */
 const resetGame = text => {
   alert(text);
-  location.reload();
+
+  //
+  $('#player_row').empty();
+  $('#enemy_row').empty();
+  $('#defender_row').empty();
+  initializeGame();
 };
 
 /*
- * initialize global variables and add the four characters to the array
+ * initialize four characters and adds them to the characters array
  */
-const initializeVariables = () => {
-  canSelectEnemy = true;
-  enemiesRemaining = 0;
-
+const initializeCharacters = () => {
   // initialize four characters
   kenobi = new Character('Kenobi', 120, 5, 7, 5);
   luke = new Character('Luke', 100, 3, 8, 3);
@@ -250,9 +252,14 @@ const initializeVariables = () => {
 };
 
 /*
- *  renders the player and enemy cards
+ *  initialize global variables, and render game cards
  */
-const initializePage = () => {
+const initializeGame = () => {
+  canSelectEnemy = true;
+  enemiesRemaining = 0;
+  selectedCharacter = null;
+  selectedDefender = null;
+
   // loop through the array and render characters and add click listeners
   characters.forEach(character => {
     enemiesRemaining++;
@@ -265,6 +272,6 @@ const initializePage = () => {
 };
 
 window.onload = () => {
-  initializeVariables();
-  initializePage();
+  initializeCharacters();
+  initializeGame();
 };
