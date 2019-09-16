@@ -1,6 +1,6 @@
 // globals variables
 const characters = []; // array of characters
-let kenobi, luke, yoda, maul, chewie, deathstar, pepe, princess; // character objects
+let kenobi, luke, yoda, maul, chewie, deathstar, pepe, princess, r2d2, freiza; // character objects
 let selectedCharacter, selectedDefender; // copies of the selected character and enemy
 let canSelectEnemy; // used to determine if the player is already fighting an enemy
 let enemiesRemaining; // counter for the number of enemies
@@ -311,9 +311,22 @@ const initializeCharacters = () => {
     10,
     './assets/images/princess.jpg'
   );
+  r2d2 = new Character('R2D2', 75, 20, 20, 20, './assets/images/r2d2.jpg');
+  freiza = new Character('Freiza', 140, 8, 12, 8, './assets/images/freiza.jpg');
 
   // add the four characters to the array
-  characters.push(kenobi, luke, yoda, maul, chewie, deathstar, pepe, princess);
+  characters.push(
+    kenobi,
+    luke,
+    yoda,
+    maul,
+    chewie,
+    deathstar,
+    pepe,
+    princess,
+    r2d2,
+    freiza
+  );
 };
 
 /*
