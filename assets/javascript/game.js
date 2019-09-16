@@ -18,27 +18,28 @@ function Character(name, hp, ap, cap) {
 
 /*
  * @param the parentElement, the element to append elements to
- * @param characterm the character used to identify and initilize the elements
+ * @param character, the character used to identify and initilize the elements
+ * @param str, the string used to append extra text to the classes and IDs
  * function to render elements and append them to the parentElement
  */
-const renderPlayerCards = (parentElement, character) => {
-  const col = $('<div>', { class: 'col-sm-12 col-md-3 ' + character.name });
-  const card = $('<div>', { class: 'card player' + character.name });
-  const cardBody = $('<div>', { class: 'card-body ' + character.name });
+const renderCards = (parentElement, character, str) => {
+  const col = $('<div>', { class: 'col-sm-12 col-md-3' });
+  const card = $('<div>', {
+    class: 'card player ' + character.name + '-' + str
+  });
+  const cardBody = $('<div>', { class: 'card-body' });
   const cardTitle = $('<h5>', {
     class: 'card-title text-center'
   }).text(character.name);
   const img = $('<img>', {
-    class: 'mx-auto ' + character.name,
+    class: 'mx-auto',
     src: 'https://picsum.photos/200',
     alt: 'sample image'
   });
-  const p = $('<p>', { class: 'card-text ' + character.name }).text(
-    character.hp + ' HP'
-  );
+  const p = $('<p>', { class: 'card-text' }).text(character.hp + ' HP');
   const button = $('<button>', {
-    class: 'btn btn-primary w-100 ' + character.name,
-    id: character.name
+    class: 'btn btn-primary w-100',
+    id: character.name + '-button-' + str
   }).text('Select');
 
   parentElement.append(col);
@@ -50,9 +51,16 @@ const renderPlayerCards = (parentElement, character) => {
   cardBody.append(button);
 };
 
-const initClickListeners = (id) => {
-  $('#' + id.name).click(function() {
-    console.log($('#' + id.name));
+/*
+ * @param character, the character used to identify and initilize the elements
+ * @param str, the string used to append extra text to the classes and IDs
+ * function that adds click listeners to each player card and hides
+ * all the other player cards except for the one selected
+ */
+const initClickListeners = (character, str) => {
+  $('#' + character.name + '-button-' + str).click(function() {
+    $('.player').hide();
+    $('.' + character.name + '-' + str).show();
   });
 };
 
@@ -124,10 +132,11 @@ const initialize = () => {
 
   characters.push(kenobi, luke, sidious, maul);
   characters.forEach((character) => {
-    renderPlayerCards($('#player_row'), character);
-    initClickListeners(character);
+    renderCards($('#player_row'), character, 'player');
+    initClickListeners(character, 'player');
   });
 
+  // render defender info
   renderDefenderCard($('#defender_row'), characters[0]);
   renderFightOptions($('#defender_row'));
   renderGameStatus($('#defender_row'));
