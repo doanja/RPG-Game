@@ -1,6 +1,6 @@
 // globals variables
 const characters = []; // array of characters
-let kenobi, luke, yoda, maul; // character objects
+let kenobi, luke, yoda, maul, chewie, deathstar, pepe, princess; // character objects
 let selectedCharacter, selectedDefender; // copies of the selected character and enemy
 let canSelectEnemy; // used to determine if the player is already fighting an enemy
 let enemiesRemaining; // counter for the number of enemies
@@ -282,13 +282,38 @@ const resetGame = text => {
  */
 const initializeCharacters = () => {
   // initialize four characters
-  kenobi = new Character('Kenobi', 120, 5, 7, 5, './assets/images/kenobi.png');
-  luke = new Character('Luke', 100, 3, 8, 3, './assets/images/luke.jpeg');
-  yoda = new Character('Yoda', 150, 10, 3, 10, './assets/images/yoda.jpg');
-  maul = new Character('Maul', 180, 19, 2, 19, './assets/images/maul.jpg');
+  kenobi = new Character('Kenobi', 120, 8, 8, 8, './assets/images/kenobi.png');
+  luke = new Character('Luke', 100, 12, 7, 12, './assets/images/luke.jpeg');
+  yoda = new Character('Yoda', 150, 10, 5, 10, './assets/images/yoda.jpg');
+  maul = new Character('Maul', 100, 5, 12, 5, './assets/images/maul.jpg');
+  chewie = new Character(
+    'Chewie',
+    50,
+    12,
+    12,
+    12,
+    './assets/images/chewie.jpg'
+  );
+  deathstar = new Character(
+    'Death-Star',
+    200,
+    5,
+    2,
+    5,
+    './assets/images/deathstar.jpg'
+  );
+  pepe = new Character('Bad-Guy', 177, 12, 8, 12, './assets/images/pepe.jpg');
+  princess = new Character(
+    'Princess',
+    80,
+    10,
+    8,
+    10,
+    './assets/images/princess.jpg'
+  );
 
   // add the four characters to the array
-  characters.push(kenobi, luke, yoda, maul);
+  characters.push(kenobi, luke, yoda, maul, chewie, deathstar, pepe, princess);
 };
 
 /*
@@ -323,16 +348,26 @@ const initializeGame = () => {
   enemiesRemaining = 0;
   selectedCharacter = null;
   selectedDefender = null;
+  const copyOfCharacters = [...characters];
 
-  // loop through the array and render characters and add click listeners
-  characters.forEach(character => {
+  // loop through the copyOfCharacters 4 times and render characters and add click listeners
+  for (let i = 0; i < 4; i++) {
+    let randomCharacter =
+      copyOfCharacters[Math.floor(Math.random() * copyOfCharacters.length)];
+    renderCards($('#player_row'), randomCharacter, 'player', 'primary');
+    onPlayerSelect(randomCharacter);
+    copyOfCharacters.splice(copyOfCharacters.indexOf(randomCharacter), 1);
+  }
+
+  // loop through the copyOfCharacters 4 times and render characters and add click listeners
+  for (let i = 0; i < 4; i++) {
+    let randomCharacter =
+      copyOfCharacters[Math.floor(Math.random() * copyOfCharacters.length)];
     enemiesRemaining++;
-    renderCards($('#player_row'), character, 'player', 'primary');
-    onPlayerSelect(character);
-
-    renderCards($('#enemy_row'), character, 'enemy', 'danger');
-    onEnemySelect(character);
-  });
+    renderCards($('#enemy_row'), randomCharacter, 'enemy', 'danger');
+    onEnemySelect(randomCharacter);
+    copyOfCharacters.splice(copyOfCharacters.indexOf(randomCharacter), 1);
+  }
 };
 
 window.onload = () => {
