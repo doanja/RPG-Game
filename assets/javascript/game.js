@@ -361,25 +361,25 @@ const initializeGame = () => {
   enemiesRemaining = 0;
   selectedCharacter = null;
   selectedDefender = null;
-  const copyOfCharacters = [...characters];
+  const copyOfCharacters1 = [...characters];
+  const copyOfCharacters2 = [...characters];
 
   // loop through the copyOfCharacters 4 times and render characters and add click listeners
   for (let i = 0; i < 4; i++) {
-    let randomCharacter =
-      copyOfCharacters[Math.floor(Math.random() * copyOfCharacters.length)];
-    renderCards($('#player_row'), randomCharacter, 'player', 'primary');
-    onPlayerSelect(randomCharacter);
-    copyOfCharacters.splice(copyOfCharacters.indexOf(randomCharacter), 1);
-  }
+    // for the player cards
+    let randomCharacter1 =
+      copyOfCharacters1[Math.floor(Math.random() * copyOfCharacters1.length)];
+    renderCards($('#player_row'), randomCharacter1, 'player', 'primary');
+    onPlayerSelect(randomCharacter1);
+    copyOfCharacters1.splice(copyOfCharacters1.indexOf(randomCharacter1), 1);
 
-  // loop through the copyOfCharacters 4 times and render characters and add click listeners
-  for (let i = 0; i < 4; i++) {
-    let randomCharacter =
-      copyOfCharacters[Math.floor(Math.random() * copyOfCharacters.length)];
+    // for the enemy cards
+    let randomCharacter2 =
+      copyOfCharacters2[Math.floor(Math.random() * copyOfCharacters2.length)];
     enemiesRemaining++;
-    renderCards($('#enemy_row'), randomCharacter, 'enemy', 'danger');
-    onEnemySelect(randomCharacter);
-    copyOfCharacters.splice(copyOfCharacters.indexOf(randomCharacter), 1);
+    renderCards($('#enemy_row'), randomCharacter2, 'enemy', 'danger');
+    onEnemySelect(randomCharacter2);
+    copyOfCharacters2.splice(copyOfCharacters2.indexOf(randomCharacter2), 1);
   }
 };
 
