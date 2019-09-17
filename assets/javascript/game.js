@@ -305,10 +305,10 @@ const initializeCharacters = () => {
   );
   deathstar = new Character(
     'Death-Star',
-    250,
-    3,
-    5,
-    3,
+    180,
+    2,
+    10,
+    2,
     './assets/images/deathstar.jpg'
   );
   pepe = new Character('Bad-Guy', 177, 5, 9, 5, './assets/images/pepe.jpg');
