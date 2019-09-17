@@ -163,8 +163,7 @@ const renderFightOptions = parentElement => {
     id: 'fight-button'
   }).text('Fight');
   const audio = $('<audio>', {
-    id: 'fight-sound',
-    src: fightSounds[Math.floor(Math.random() * fightSounds.length)]
+    id: 'fight-sound'
   });
 
   parentElement.append(col);
@@ -205,6 +204,9 @@ const fightButtonListener = () => {
       alert('Select your character.');
     } else {
       updateDefenderCard(); // update defender card
+      const randomFightSound =
+        fightSounds[Math.floor(Math.random() * fightSounds.length)];
+      $('#fight-sound').attr('src', randomFightSound);
       playSound('fight-sound');
 
       // when player hp reaches 0
@@ -281,28 +283,35 @@ const resetGame = text => {
  * initialize four characters and adds them to the characters array
  */
 const initializeCharacters = () => {
-  // initialize four characters
-  kenobi = new Character('Kenobi', 120, 8, 8, 8, './assets/images/kenobi.png');
+  // initialize characters
+  kenobi = new Character(
+    'Kenobi',
+    120,
+    10,
+    7,
+    10,
+    './assets/images/kenobi.png'
+  );
   luke = new Character('Luke', 100, 12, 7, 12, './assets/images/luke.jpeg');
-  yoda = new Character('Yoda', 150, 10, 5, 10, './assets/images/yoda.jpg');
-  maul = new Character('Maul', 100, 5, 12, 5, './assets/images/maul.jpg');
+  yoda = new Character('Yoda', 150, 7, 9, 7, './assets/images/yoda.jpg');
+  maul = new Character('Maul', 100, 5, 15, 5, './assets/images/maul.jpg');
   chewie = new Character(
     'Chewie',
-    50,
-    12,
-    12,
-    12,
+    60,
+    10,
+    40,
+    10,
     './assets/images/chewie.jpg'
   );
   deathstar = new Character(
     'Death-Star',
-    200,
+    250,
+    3,
     5,
-    2,
-    5,
+    3,
     './assets/images/deathstar.jpg'
   );
-  pepe = new Character('Bad-Guy', 177, 12, 8, 12, './assets/images/pepe.jpg');
+  pepe = new Character('Bad-Guy', 177, 5, 9, 5, './assets/images/pepe.jpg');
   princess = new Character(
     'Princess',
     80,
@@ -311,8 +320,15 @@ const initializeCharacters = () => {
     10,
     './assets/images/princess.jpg'
   );
-  r2d2 = new Character('R2D2', 75, 20, 20, 20, './assets/images/r2d2.jpg');
-  freiza = new Character('Freiza', 140, 8, 12, 8, './assets/images/freiza.jpg');
+  r2d2 = new Character('R2D2', 50, 20, 30, 20, './assets/images/r2d2.jpg');
+  freiza = new Character(
+    'Freiza',
+    90,
+    10,
+    15,
+    10,
+    './assets/images/freiza.jpg'
+  );
 
   // add the four characters to the array
   characters.push(
@@ -349,7 +365,14 @@ const initializeSounds = () => {
   fightSounds = [
     './assets/sounds/fight-sounds/death-mark.mp3',
     './assets/sounds/fight-sounds/iihhrrl.mp3',
-    './assets/sounds/fight-sounds/kaiba-pain1.mp3'
+    './assets/sounds/fight-sounds/kaiba-pain1.mp3',
+    './assets/sounds/fight-sounds/roblox-death-sound_ytkBL7X.mp3',
+    './assets/sounds/fight-sounds/bruh.mp3',
+    './assets/sounds/fight-sounds/nut_ZKo5FA9.mp3',
+    './assets/sounds/fight-sounds/movie_1.mp3',
+    './assets/sounds/fight-sounds/perfect-fart.mp3',
+    './assets/sounds/fight-sounds/wet-fart-2.mp3',
+    './assets/sounds/fight-sounds/dry-fart.mp3'
   ];
 };
 
