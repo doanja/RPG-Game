@@ -10,11 +10,11 @@ jQuery RPG Fighter is an interactive game for web browsers. The game dynamically
 
 ### Demo
 
-- https://doanja.github.io/unit-4-game/
+- https://github.com/doanja/RPG-Game.git
 
 # Download and Play Locally
 
-1. Clone the repository "https://github.com/doanja/unit-4-game.git" to your PC.
+1. Clone the repository "https://github.com/doanja/RPG-Game" to your PC.
 2. Open index.html in your web browser and select a player, enemy and click fight.
 
 # License
