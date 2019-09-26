@@ -102,6 +102,7 @@ const onEnemySelect = character => {
       canSelectEnemy = false; // disallow player from selecting a new enemy
       enemiesRemaining--; // decrement the number of enemies
       $('.' + character.name + '-enemy').hide(); // delete the selected enemy card
+      $('#enemy_row').hide();
 
       // create a copy of the selected enemy
       selectedDefender = { ...character };
@@ -223,6 +224,7 @@ const fightButtonListener = () => {
       else if (selectedDefender.hp <= 0) {
         alert('Defender died...');
         $('.card-defender').remove();
+        $('#enemy_row').show();
         canSelectEnemy = true;
       }
     }
@@ -276,6 +278,7 @@ const resetGame = text => {
   $('#player_row').empty();
   $('#enemy_row').empty();
   $('#defender_row').empty();
+  $('#enemy_row').show();
   initializeGame();
 };
 
